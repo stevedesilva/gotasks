@@ -13,7 +13,8 @@ func main() {
 	// multiexe()
 	// e1()
 	// e1Multiplication()
-	e2Algebra()
+	// e2Algebra()
+	fmt.Println(2 % 3)
 }
 
 func multiexe() {
