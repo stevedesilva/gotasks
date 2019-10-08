@@ -95,6 +95,7 @@ func richterScaleNum() {
 	args := os.Args
 	if len(args) != 2 {
 		fmt.Println("Give me the magnitude of the earthquake")
+		return
 	}
 
 	num, err := strconv.ParseFloat(args[1], 64)
