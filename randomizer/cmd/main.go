@@ -28,7 +28,8 @@ import (
 func main() {
 	// firstTurnWinner()
 	// randMsg()
-	doubleGuesses()
+	// doubleGuesses()
+	verboseMode()
 }
 
 func firstTurnWinner() {
@@ -216,6 +217,73 @@ func doubleGuesses() {
 	for i := 1; i <= maxTurns; i++ {
 		random := rand.Intn(maxTurns + 1)
 		if guess != random && guess2 != random {
+			continue
+		}
+		fmt.Println(wonMsg())
+		return
+	}
+	fmt.Println(lostMsg())
+}
+
+// ---------------------------------------------------------
+// EXERCISE: Verbose Mode
+//
+//  When the player runs the game like this:
+//
+//    go run main.go -v 4
+//
+//  Display each generated random number:
+
+//    1 3 4 🎉  YOU WIN!
+//
+//  In this example, computer picks 1, 3, and 4. And the
+//  player wins.
+//
+// HINT
+//  You need to get and interpret the command-line arguments.
+// ---------------------------------------------------------
+func verboseMode() {
+	const (
+		maxTurns = 5 // less is more difficult
+		usage    = `Welcome to the Lucky Number Game! 🍀
+	The program will pick %d random numbers.
+	Your mission is to guess one of those numbers.
+	The greater your number is, harder it gets.
+	Wanna play?
+	(Provide -v flag to see the picked numbers.)
+	`
+	)
+	args := os.Args[1:]
+
+	if len(args) < 1 {
+		fmt.Printf(usage, maxTurns)
+		return
+	}
+
+	var verbose bool
+	if args[0] == "-v" {
+		verbose = true
+	}
+
+	guess, err := strconv.Atoi(args[len(args)-1])
+	if err != nil {
+		fmt.Println("Not a number.", guess)
+		return
+	}
+
+	if guess < 0 {
+		fmt.Println("Please pick a positive number.")
+		return
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	for i := 1; i <= maxTurns; i++ {
+		random := rand.Intn(maxTurns + 1)
+		if verbose {
+			fmt.Printf("%d ", random)
+		}
+
+		if guess != random {
 			continue
 		}
 		fmt.Println(wonMsg())
