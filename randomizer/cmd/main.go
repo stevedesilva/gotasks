@@ -63,7 +63,7 @@ func firstTurnWinner() {
 
 	rand.Seed(time.Now().UnixNano())
 	for i := 1; i <= maxTurns; i++ {
-		random := rand.Intn(maxTurns + 1)
+		random := rand.Intn(guess + 1)
 		if guess != random {
 			continue
 		}
@@ -133,7 +133,7 @@ func randMsg() {
 
 	rand.Seed(time.Now().UnixNano())
 	for i := 1; i <= maxTurns; i++ {
-		random := rand.Intn(maxTurns + 1)
+		random := rand.Intn(guess + 1)
 		if guess != random {
 			continue
 		}
@@ -213,16 +213,21 @@ func doubleGuesses() {
 		return
 	}
 
-	rand.Seed(time.Now().UnixNano())
-	for i := 1; i <= maxTurns; i++ {
-		random := rand.Intn(maxTurns + 1)
-		if guess != random && guess2 != random {
-			continue
-		}
-		fmt.Println(wonMsg())
-		return
+	min := guess
+	if guess < guess2 {
+		min = guess2
 	}
-	fmt.Println(lostMsg())
+
+	for turn := 0; turn < maxTurns; turn++ {
+		n := rand.Intn(min + 1)
+
+		if n == guess || n == guess2 {
+			fmt.Println("🎉  YOU WIN!")
+			return
+		}
+	}
+
+	fmt.Println("☠️  YOU LOST... Try again?")
 }
 
 // ---------------------------------------------------------
@@ -278,7 +283,7 @@ func verboseMode() {
 
 	rand.Seed(time.Now().UnixNano())
 	for i := 1; i <= maxTurns; i++ {
-		random := rand.Intn(maxTurns + 1)
+		random := rand.Intn(guess + 1)
 		if verbose {
 			fmt.Printf("%d ", random)
 		}
@@ -290,4 +295,59 @@ func verboseMode() {
 		return
 	}
 	fmt.Println(lostMsg())
+}
+
+// ---------------------------------------------------------
+// EXERCISE: Enough Picks
+//
+//  If the player's guess number is below 10;
+//  then make sure that the computer generates a random
+//  number between 0 and 10.
+//
+//  However, if the guess number is above 10; then the
+//  computer should generate the numbers
+//  between 0 and the guess number.
+//
+// WHY?
+//  This way the game will be harder.
+//
+//  Because, in the current version of the game, if
+//  the player's guess number is for example 3; then the
+//  computer picks a random number between 0 and 3.
+//
+//  So, currently a player can easily win the game.
+//
+// EXAMPLE
+//  Suppose that the player runs the game like this:
+//    go run main.go 9
+//
+//  Or like this:
+//    go run main.go 2
+//
+//    Then the computer should pick a random number
+//    between 0-10.
+//
+//  Or, if the player runs it like this:
+//    go run main.go 15
+//
+//    Then the computer should pick a random number
+//    between 0-15.
+// ---------------------------------------------------------
+
+func enoughPicks() {
+
+	const (
+		usage = `Welcome to the Lucky Number Game! 🍀
+	The program will pick %d random numbers.
+	Your mission is to guess one of those numbers.
+	The greater your number is, harder it gets.
+	Wanna play?
+	`
+	)
+
+	guess := os.Args[1:]
+	if len(guess) != 1 {
+		fmt.Println(usage)
+		return
+	}
 }
