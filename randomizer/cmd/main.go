@@ -29,7 +29,8 @@ func main() {
 	// firstTurnWinner()
 	// randMsg()
 	// doubleGuesses()
-	verboseMode()
+	// verboseMode()
+	enoughPicks()
 }
 
 func firstTurnWinner() {
@@ -337,17 +338,44 @@ func verboseMode() {
 func enoughPicks() {
 
 	const (
-		usage = `Welcome to the Lucky Number Game! 🍀
+	
+		maxTurns = 5 // less is more difficult
+		usage    = `Welcome to the Lucky Number Game! 🍀
 	The program will pick %d random numbers.
 	Your mission is to guess one of those numbers.
 	The greater your number is, harder it gets.
 	Wanna play?
 	`
 	)
-
-	guess := os.Args[1:]
-	if len(guess) != 1 {
-		fmt.Println(usage)
+	args := os.Args[1:]
+	if len(args) < 1 {
+		fmt.Printf(usage, maxTurns)
 		return
 	}
+
+	guess, err := strconv.Atoi(args[0])
+	if err != nil {
+		fmt.Println("Not a number.")
+	}
+
+	if guess < 0 {
+		fmt.Println("Please pick a positive number.")
+		return
+	}
+
+	random := 10
+	if guess > random {
+		random = guess
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	for i:=1; i <= maxTurns; i++ {
+		
+		if guess == rand.Intn(random + 1) {
+			fmt.Println("🎉  YOU WIN!")
+			return
+		}
+	}
+	fmt.Println("☠️  YOU LOST... Try again?")
+
 }
