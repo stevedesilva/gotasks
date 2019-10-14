@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -120,4 +121,18 @@ func caseInSearch() {
 // ---------------------------------------------------------
 
 func pathMatcher() {
+
+	query := os.Args[1:]
+
+	words := filepath.SplitList(os.Getenv("PATH"))
+
+	for _, q := range query {
+		q = strings.ToLower(q)
+		for i, w := range words {
+			w = strings.ToLower(w)
+			if strings.Contains(w, q) {
+				fmt.Printf("#%-2d : %q\n", i+1, w)
+			}
+		}
+	}
 }
