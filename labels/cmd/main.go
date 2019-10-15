@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -29,7 +30,7 @@ const (
 func main() {
 	// caseInSearch()
 	// pathMatcher()
-	prime()
+	primes()
 }
 
 func caseInSearch() {
@@ -162,6 +163,42 @@ func pathMatcher() {
 //  go run main.go 1 2 3 5 7 A B C
 //    2 3 5 7
 // ---------------------------------------------------------
+func primes() {
+	// remember [1:] skips the first argument
 
-func prime() {
+main:
+	for _, arg := range os.Args[1:] {
+		n, err := strconv.Atoi(arg)
+		if err != nil {
+			// skip non-numerics
+			continue
+		}
+
+		switch {
+		// prime
+		case n == 2 || n == 3:
+			fmt.Print(n, " ")
+			continue
+
+		// not a prime
+		case n <= 1 || n%2 == 0 || n%3 == 0:
+			fmt.Print(n, "-NOT ")
+			continue
+		}
+
+		for i, w := 5, 2; i*i <= n; {
+			// not a prime
+			if n%i == 0 {
+				continue main
+			}
+
+			i += w
+			w = 6 - w
+		}
+
+		// all checks ok: it's a prime
+		fmt.Print(n, " ")
+	}
+
+	fmt.Println()
 }
