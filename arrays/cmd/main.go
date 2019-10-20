@@ -233,7 +233,7 @@ func getAndSetArrayElements() {
 	data[2] = 'L'
 	data[3] = 'L'
 	data[4] = 'O'
-	
+
 	ratios[0] = 3.14145
 
 	alives[0] = true
@@ -275,4 +275,41 @@ func getAndSetArrayElements() {
 		fmt.Printf("zero[%d]: %d\n", i, zero[i])
 	}
 
+	fmt.Printf(`
+%s
+FOR RANGES
+%[1]s
+`, strings.Repeat("~", 30))
+
+	fmt.Print("names", separator)
+	for i, v := range names {
+		fmt.Printf("names[%d]: %q\n", i, v)
+	}
+
+	fmt.Print("\ndistances", separator)
+	for i, v := range distances {
+		fmt.Printf("distances[%d]: %d\n", i, v)
+	}
+
+	fmt.Print("\ndata", separator)
+	for i, v := range data {
+		// try the %c verb
+		fmt.Printf("data[%d]: %d\n", i, v)
+	}
+
+	fmt.Print("\nratios", separator)
+	for i, v := range ratios {
+		fmt.Printf("ratios[%d]: %.2f\n", i, v)
+	}
+
+	fmt.Print("\nalives", separator)
+	for i, v := range alives {
+		fmt.Printf("alives[%d]: %t\n", i, v)
+	}
+
+	// no loop for zero elements
+	fmt.Print("\nzero", separator)
+	for i, v := range zero {
+		fmt.Printf("zero[%d]: %d\n", i, v)
+	}
 }
