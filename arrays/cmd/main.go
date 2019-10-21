@@ -334,11 +334,11 @@ FOR RANGES
 
 func arrayLiterals() {
 
-	names := [3]string{"Einstein", "Tesla", "Shepard"}
-	distances := [5]int{50, 40, 75, 30, 125}
-	data := [5]uint8{'H', 'E', 'L', 'L', 'O'}
-	ratios := [1]float64{3.14145}
-	alives := [4]bool{true, false, true, false}
+	names := [...]string{"Einstein", "Tesla", "Shepard"}
+	distances := [...]int{50, 40, 75, 30, 125}
+	data := [...]uint8{'H', 'E', 'L', 'L', 'O'}
+	ratios := [...]float64{3.14145}
+	alives := [...]bool{true, false, true, false}
 	var zero [0]uint8
 
 	separator := "\n" + strings.Repeat("=", 20) + "\n"
