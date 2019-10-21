@@ -10,7 +10,8 @@ func main() {
 	// getAndSetArrayElements()
 	// arrayLiterals()
 	// simplify()
-	comparableArrays()
+	// comparableArrays()
+	assignmentOfArrays()
 }
 
 // ---------------------------------------------------------
@@ -467,4 +468,17 @@ func comparableArrays() {
 // ---------------------------------------------------------
 
 func assignmentOfArrays() {
+	books := [...]string{"Kafka's Revenge", "Stay Golden", "Everythingship"}
+	var (
+		upper, lower [3]string
+	)
+
+	for i, v := range books {
+		upper[i] = strings.ToUpper(v)
+		lower[i] = strings.ToLower(v)
+	}
+
+	fmt.Printf("books: %q\n", books)
+	fmt.Printf("upper: %q\n", upper)
+	fmt.Printf("lower: %q\n", lower)
 }
