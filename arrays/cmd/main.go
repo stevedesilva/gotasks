@@ -533,12 +533,12 @@ func moodly() {
 
 	name := args[0]
 	var moods = [...]string{
-		"feels good 👍", "feels happy 😀", "feels awesome 😎",
-		"feels terrible 😩", "feels sad 😞", "feels bad 👎",
+		"good 👍", "happy 😀", "awesome 😎",
+		"terrible 😩", "sad 😞", "bad 👎",
 	}
 
 	rand.Seed(time.Now().UnixNano())
 	random := rand.Intn(len(moods))
-	fmt.Printf("%s %s\n", name, moods[random])
+	fmt.Printf("%s feels %s\n", name, moods[random])
 
 }
