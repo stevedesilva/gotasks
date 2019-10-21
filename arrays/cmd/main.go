@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"os"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -11,7 +14,8 @@ func main() {
 	// arrayLiterals()
 	// simplify()
 	// comparableArrays()
-	assignmentOfArrays()
+	// assignmentOfArrays()
+	moodly()
 }
 
 // ---------------------------------------------------------
@@ -481,4 +485,59 @@ func assignmentOfArrays() {
 	fmt.Printf("books: %q\n", books)
 	fmt.Printf("upper: %q\n", upper)
 	fmt.Printf("lower: %q\n", lower)
+}
+
+// ---------------------------------------------------------
+// EXERCISE: Moodly
+//
+//   1. Get username from command-line
+//
+//   2. Display the usage if the username is missing
+//
+//   3. Create an array
+//     1. Add three positive mood messages
+//     2. Add three negative mood messages
+//
+//   4. Randomly select and print one of the mood messages
+//
+// EXPECTED OUTPUT
+//
+//   go run main.go
+//     [your name]
+//
+//   go run main.go Socrates
+//     Socrates feels good 👍
+//
+//   go run main.go Socrates
+//     Socrates feels bad 👎
+//
+//   go run main.go Socrates
+//     Socrates feels sad 😞
+//
+//   go run main.go Socrates
+//     Socrates feels happy 😀
+//
+//   go run main.go Socrates
+//     Socrates feels awesome 😎
+//
+//   go run main.go Socrates
+//     Socrates feels terrible 😩
+// ---------------------------------------------------------
+func moodly() {
+	args := os.Args[1:]
+
+	if len(args) != 1 {
+		fmt.Println("[your name]")
+		return
+	}
+	name := args[0]
+	var moods = [...]string{
+		"feels good 👍", "feels happy 😀", "feels awesome 😎",
+		"feels terrible 😩", "feels sad 😞", "feels bad 👎",
+	}
+
+	rand.Seed(time.Hour.Nanoseconds())
+	random := rand.Intn(6)
+	fmt.Printf("%s %s\n", name, moods[random])
+
 }
