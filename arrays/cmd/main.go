@@ -415,8 +415,8 @@ func simplify() {
 //  false
 // ---------------------------------------------------------
 func comparableArrays() {
-	week := [2]string{"Monday", "Tuesday"}
-	wend := [2]string{"Saturday", "Sunday"}
+	week := [...]string{"Monday", "Tuesday"}
+	wend := [...]string{"Saturday", "Sunday"}
 
 	fmt.Println(week != wend)
 
