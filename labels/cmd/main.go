@@ -28,8 +28,8 @@ const (
 )
 
 func main() {
-	// caseInSearch()
-	// pathMatcher()
+	caseInSearch()
+	pathMatcher()
 	primes()
 }
 

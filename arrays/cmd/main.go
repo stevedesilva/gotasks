@@ -987,4 +987,26 @@ func bubblesort(nums [5]float64) [5]float64 {
 const corpus = "lazy cat jumps again and again and again since the beginning this was very important"
 
 func wordSearch() {
+	words := strings.Fields(corpus)
+	query := os.Args[1:]
+
+
+queries:
+	for _, q := range query {
+	q = strings.ToLower(q)	
+	search:
+		for i, w := range words {
+			switch q {
+			case "and", "or", "the","was", "since", "very":
+				break search
+			}
+
+			if q == w {
+				fmt.Printf("#%-2d: %q\n", i+1, w)
+
+				// find the first word then quit
+				continue queries
+			}
+		}
+	}
 }
