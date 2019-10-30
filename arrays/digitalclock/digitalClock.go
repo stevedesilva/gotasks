@@ -125,9 +125,10 @@ func digitalClock() {
 		for line := range clock[0] {
 			// get each digit
 			for index, digit := range clock {
-				// print [0][0], [1][0], [2][0]...
-				// colon blink
+				// draw clock horizonally (old 8bit computer game style)
+				// e.g. print [0][0], [1][0], [2][0]...
 				next := clock[index][line]
+				// colon blink
 				if digit == colon && sec%2 == 0 {
 					next = "   "
 				}
