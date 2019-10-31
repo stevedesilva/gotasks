@@ -11,7 +11,7 @@ func main() {
 	digitalClock()
 }
 func digitalClock() {
-	
+
 	screen.Clear()
 	for {
 
