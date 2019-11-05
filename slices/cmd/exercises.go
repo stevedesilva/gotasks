@@ -9,15 +9,19 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"sort"
 	"strings"
+	"time"
 )
 
 func main() {
 	// e1()
 	// e2()
-	e3()
+	// e3()
+	// e1Append()
+	e2Append()
 }
 
 // ---------------------------------------------------------
@@ -139,4 +143,113 @@ func e3() {
 
 	fmt.Printf("%q\n", books)
 	fmt.Printf("%d\n", nums)
+}
+
+// ---------------------------------------------------------
+// EXERCISE: Append
+//
+//  Please follow the instructions within the code below.
+//
+// EXPECTED OUTPUT
+//  They are equal.
+//
+// HINTS
+//  bytes.Equal function allows you to compare two byte
+//  slices easily. Check its documentation: go doc bytes.Equal
+// ---------------------------------------------------------
+func e1Append() {
+	// 1. uncomment the code below
+	png, header := []byte{'P', 'N', 'G'}, []byte{}
+
+	// 2. append elements to header to make it equal with the png slice
+	header = append(header, png...)
+	// 3. compare the slices using the bytes.Equal function
+	equal := bytes.Equal(png, header)
+	// 4. print whether they're equal or not
+	fmt.Println("Is equal: ", equal)
+
+}
+
+// ---------------------------------------------------------
+// EXERCISE: Append #2
+//
+//  1. Create the following nil slices:
+//     + Pizza toppings
+//     + Departure times
+//     + Student graduation years
+//     + On/off states of lights in a room
+//
+//  2. Append them some elements (use your creativity!)
+//
+//  3. Print all the slices
+//
+//
+// EXPECTED OUTPUT
+// (Your output may change, mine is like so:)
+//
+//  pizza       : [pepperoni onions extra cheese]
+//
+//  graduations : [1998 2005 2018]
+//
+//  departures  : [2019-01-28 15:09:31.294594 +0300 +03 m=+0.000325020
+//  2019-01-29 15:09:31.294594 +0300 +03 m=+86400.000325020
+//  2019-01-30 15:09:31.294594 +0300 +03 m=+172800.000325020]
+//
+//  lights      : [true false true]
+//
+//
+// HINTS
+//  + For departure times, use the time.Time type. Check its documentation.
+//
+//      now := time.Now()     -> Gives you the current time
+//      now.Add(time.Hour*24) -> Gives you a time.Time 24 hours after `now`
+//
+//  + For graduation years, you can use the int type
+// ---------------------------------------------------------
+
+func e2Append() {
+	var (
+		pizza      []string
+		departures []time.Time
+		graduations []int
+		lights      []bool
+	)
+
+	pizza = append(pizza, "chicken", "onion", "cheese")
+	departures = append(departures, time.Now(), time.Now().Add(time.Hour*24), time.Now().Add(time.Hour*48))
+	graduations = append(graduations, 1999, 2000, 2010, 2019)
+	lights = append(lights, true, false)
+
+	fmt.Printf("pizza       : %s\n", pizza)
+	fmt.Printf("\ndepartures  : %s\n", departures)
+	fmt.Printf("\ngraduations : %d\n", graduations)
+	fmt.Printf("\nlights      : %t\n", lights)
+
+}
+
+
+// ---------------------------------------------------------
+// EXERCISE: Append #3 — Fix the problems
+//
+//  Fix the problems in the code below.
+//
+// BONUS
+//
+//  Simplify the code.
+//
+// EXPECTED OUTPUT
+//
+//  toppings: [black olives green peppers onions extra cheese]
+//
+// ---------------------------------------------------------
+
+func e3Append() {
+	// toppings := []int{"black olives", "green peppers"}
+
+	// var pizza [3]string
+	// append(pizza, ...toppings)
+	// pizza = append(toppings, "onions")
+	// toppings = append(pizza, extra cheese)
+
+	// fmt.Printf("pizza       : %s\n", pizza)
 }
