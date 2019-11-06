@@ -21,7 +21,8 @@ func main() {
 	// e2()
 	// e3()
 	// e1Append()
-	e2Append()
+	// e2Append()
+	e3Append()
 }
 
 // ---------------------------------------------------------
@@ -209,8 +210,8 @@ func e1Append() {
 
 func e2Append() {
 	var (
-		pizza      []string
-		departures []time.Time
+		pizza       []string
+		departures  []time.Time
 		graduations []int
 		lights      []bool
 	)
@@ -226,7 +227,6 @@ func e2Append() {
 	fmt.Printf("\nlights      : %t\n", lights)
 
 }
-
 
 // ---------------------------------------------------------
 // EXERCISE: Append #3 — Fix the problems
@@ -244,12 +244,11 @@ func e2Append() {
 // ---------------------------------------------------------
 
 func e3Append() {
-	// toppings := []int{"black olives", "green peppers"}
+	toppings := []string{"black olives", "green peppers"}
 
-	// var pizza [3]string
-	// append(pizza, ...toppings)
-	// pizza = append(toppings, "onions")
-	// toppings = append(pizza, extra cheese)
+	var pizza []string
+	pizza = append(pizza, toppings...)
+	pizza = append(pizza, "onions","extra cheese")
 
-	// fmt.Printf("pizza       : %s\n", pizza)
+	fmt.Printf("toppings       : %s\n", pizza)
 }
