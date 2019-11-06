@@ -11,7 +11,9 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -22,7 +24,8 @@ func main() {
 	// e3()
 	// e1Append()
 	// e2Append()
-	e3Append()
+	// e3Append()
+	e3Sort()
 }
 
 // ---------------------------------------------------------
@@ -248,7 +251,60 @@ func e3Append() {
 
 	var pizza []string
 	pizza = append(pizza, toppings...)
-	pizza = append(pizza, "onions","extra cheese")
+	pizza = append(pizza, "onions", "extra cheese")
 
 	fmt.Printf("toppings       : %s\n", pizza)
+}
+
+// ---------------------------------------------------------
+// EXERCISE: Append and Sort Numbers
+//
+//  We'll have a []string that should contain numbers.
+//
+//  Your task is to convert the []string to an int slice.
+//
+//  1. Get the numbers from the command-line
+//
+//  2. Append them to an []int
+//
+//  3. Sort the numbers
+//
+//  4. Print them
+//
+//  5. Handle the error cases
+//
+//
+// EXPECTED OUTPUT
+//
+//  go run main.go
+//    provide a few numbers
+//
+//  go run main.go 4 6 1 3 0 9 2
+//    [0 1 2 3 4 6 9]
+//
+//  go run main.go a b c
+//    []
+//
+//  go run main.go 4 a 1 c d 9
+//    [1 4 9]
+//
+// ---------------------------------------------------------
+
+func e3Sort() {
+	args := os.Args[1:]
+	if len(args) == 0 {
+		fmt.Println("Provide a few numbers.")
+		return
+	}
+	var in []int
+	for _, v := range args {
+		i, err := strconv.Atoi(v)
+		if err != nil {
+			continue
+		}
+		in = append(in, i)
+	}
+
+	sort.Ints(in)
+	fmt.Printf("%d", in)
 }
