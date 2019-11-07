@@ -380,54 +380,43 @@ Istanbul,500,10,5,1000000`
 	)
 
 	var (
-		location                  []string
-		size, beds, baths, prices []int
+		location                                      []string
+		size, beds, baths, prices                     []int
+		sizeTotal, bedsTotal, bathsTotal, pricesTotal int
 	)
-	row := strings.Split(data, "\n")
-	for _, r := range row {
-		t := strings.Split(r, separator)
-		for idx, info := range t {
+	rows := strings.Split(data, "\n")
+	for _, row := range rows {
+		col := strings.Split(row, separator)
+		location = append(location, col[0])
 
-			switch idx {
-			case 0:
-				location = append(location, info)
-			case 1:
-				{
-					i, err := strconv.Atoi(info)
-					if err != nil {
-						return
-					}
-					size = append(size, i)
-				}
-			case 2:
-				{
-					i, err := strconv.Atoi(info)
-					if err != nil {
-						return
-					}
-					beds = append(beds, i)
-				}
-
-			case 3:
-				{
-					i, err := strconv.Atoi(info)
-					if err != nil {
-						return
-					}
-					baths = append(baths, i)
-				}
-
-			case 4:
-				{
-					i, err := strconv.Atoi(info)
-					if err != nil {
-						return
-					}
-					prices = append(prices, i)
-				}
-			}
-
+		s, err := strconv.Atoi(col[1])
+		if err != nil {
+			return
 		}
+		sizeTotal += s
+		size = append(size, s)
+
+		b, err := strconv.Atoi(col[2])
+		if err != nil {
+			return
+		}
+		bedsTotal += b
+		beds = append(beds, b)
+
+		ba, err := strconv.Atoi(col[3])
+		if err != nil {
+			return
+		}
+		bathsTotal += ba
+		baths = append(baths, ba)
+
+		p, err := strconv.Atoi(col[4])
+		if err != nil {
+			return
+		}
+		pricesTotal += p
+		prices = append(prices, p)
+
 	}
 
 	hdr := strings.Split(header, separator)
@@ -437,7 +426,7 @@ Istanbul,500,10,5,1000000`
 	fmt.Println()
 	fmt.Println(strings.Repeat("=", 80))
 
-	for i := 0; i < 4; i++ {
+	for i := range rows {
 		fmt.Printf("%-15s", location[i])
 		fmt.Printf("%-15d", size[i])
 		fmt.Printf("%-15d", beds[i])
@@ -445,4 +434,12 @@ Istanbul,500,10,5,1000000`
 		fmt.Printf("%-15d", prices[i])
 		fmt.Println()
 	}
+
+	fmt.Println(strings.Repeat("=", 80))
+	fmt.Printf("%-15s", "")
+	fmt.Printf("%-15.2f", float64(sizeTotal)/float64(len(size)))
+	fmt.Printf("%-15.2f", float64(bedsTotal)/float64(len(beds)))
+	fmt.Printf("%-15.2f", float64(bathsTotal)/float64(len(baths)))
+	fmt.Printf("%-15.2f", float64(pricesTotal)/float64(len(prices)))
+	fmt.Println()
 }
