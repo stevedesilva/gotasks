@@ -380,11 +380,8 @@ Istanbul,500,10,5,1000000`
 	)
 
 	var (
-		location []string
-		size     []int
-		beds     []int
-		baths    []int
-		prices   []int
+		location                  []string
+		size, beds, baths, prices []int
 	)
 	row := strings.Split(data, "\n")
 	for _, r := range row {
@@ -447,5 +444,5 @@ Istanbul,500,10,5,1000000`
 		fmt.Printf("%-15d", baths[i])
 		fmt.Printf("%-15d", prices[i])
 		fmt.Println()
-	} 
+	}
 }
