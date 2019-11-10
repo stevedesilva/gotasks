@@ -27,7 +27,8 @@ func main() {
 	// e3Append()
 	// e3Sort()
 	// e4HousePrices()
-	e5Slice()
+	// e5Slice()
+	slicingByArguments()
 }
 
 // ---------------------------------------------------------
@@ -518,7 +519,6 @@ func e5Slice() {
 	evenlast1 := even[len(even)-1:]
 	oddlast2 := odd[len(odd)-2:]
 
-
 	fmt.Printf("nums         :%d \n", num)
 	fmt.Printf("even         :%d \n", even)
 	fmt.Printf("odd          :%d \n", odd)
@@ -527,5 +527,163 @@ func e5Slice() {
 	fmt.Printf("last 2       :%d \n", lastTwo)
 	fmt.Printf("evens last 1 :%d \n", evenlast1)
 	fmt.Printf("odd last 2   :%d \n", oddlast2)
+
+}
+
+// ---------------------------------------------------------
+// EXERCISE: Slicing by arguments
+//
+//   We've a []string, you will get arguments from the command-line,
+//   then you will print only the elements that are requested.
+//
+//   1. Print the []string (it's in the code below)
+//
+//   2. Get the starting and stopping positions from the command-line
+//
+//   3. Print the []string slice by slicing it using the starting and stopping
+//      positions
+//
+//   4. Handle the error cases (see the expected output below)
+//
+//   5. Add new elements to the []string slice literal.
+//      Your program should work without changing the rest of the code.
+//
+//   6. Now, play with your program, get a deeper sense of how the slicing
+//      works.
+//
+//
+// EXPECTED OUTPUT
+//
+//  go run main.go
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    Provide only the [starting] and [stopping] positions
+//
+//
+//  (error because: we expect only two arguments)
+//
+//  go run main.go 1 2 4
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    Provide only the [starting] and [stopping] positions
+//
+//
+//  (error because: starting index >= 0 && stopping pos <= len(slice) )
+//
+//  go run main.go -1 5
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    Wrong positions
+//
+//
+//  (error because: starting <= stopping)
+//
+//  go run main.go 3 2
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    Wrong positions
+//
+//
+//  go run main.go 0
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    [Normandy Verrikan Nexus Warsaw]
+//
+//
+//  go run main.go 1
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    [Verrikan Nexus Warsaw]
+//
+//
+//  go run main.go 2
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    [Nexus Warsaw]
+//
+//
+//  go run main.go 3
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    [Warsaw]
+//
+//
+//  go run main.go 4
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    []
+//
+//
+//  go run main.go 0 3
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    [Normandy Verrikan Nexus]
+//
+//
+//  go run main.go 1 3
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    [Verrikan Nexus]
+//
+//
+//  go run main.go 1 2
+//    ["Normandy" "Verrikan" "Nexus" "Warsaw"]
+//
+//    [Verrikan]
+//
+// ---------------------------------------------------------
+
+func slicingByArguments() {
+
+	const (
+		msg = `["Normandy" "Verrikan" "Nexus" "Warsaw"]
 	
+Provide only the [starting] and [stopping] positions
+		`
+		wrongMsg = `["Normandy" "Verrikan" "Nexus" "Warsaw"]
+	
+Wrong positions
+		`
+
+		convMsg = "Can't convert"
+	)
+
+	var (
+		starting, stopping, l int
+	)
+	// uncomment the slice below
+	ships := []string{"Normandy", "Verrikan", "Nexus", "Warsaw"}
+
+	args := os.Args[1:]
+
+	if l = len(args); l > 2 || l <= 0 {
+		fmt.Println(msg)
+		return
+	}
+
+	starting, err := strconv.Atoi(args[0])
+	if err != nil {
+		fmt.Println(convMsg)
+		return
+	}
+
+	if l == 1 {
+		stopping = len(ships)
+	} else {
+		end, err := strconv.Atoi(args[1])
+		if err != nil {
+			fmt.Println(convMsg)
+			return
+		}
+		stopping = end
+	}
+
+	// starting index >= 0 && stopping pos <= len(slice)
+	if validRange, validPos := starting >= 0 && stopping <= len(ships), starting <= stopping; !validRange || !validPos {
+		fmt.Println(wrongMsg)
+	}
+
+	slice := ships[starting:stopping]
+
+	fmt.Println(slice)
 }
