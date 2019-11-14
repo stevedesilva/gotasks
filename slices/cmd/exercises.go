@@ -16,6 +16,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	s "github.com/inancgumus/prettyslice"
 )
 
 func main() {
@@ -29,7 +31,9 @@ func main() {
 	// e4HousePrices()
 	// e5Slice()
 	// slicingByArguments()
-	sliceHousePrices()
+	// sliceHousePrices()
+	// test()
+	prettyCap()
 }
 
 // ---------------------------------------------------------
@@ -883,4 +887,82 @@ Istanbul,500,10,5,1000000`
 			fmt.Println()
 		}
 	}
+}
+
+func test() {
+	arr := [...]int{9, 7, 5, 3, 1}
+	fmt.Println("arr: ", arr)
+
+	nums := arr[2:]
+	fmt.Println("nums: ", nums)
+	nums2 := nums[1:]
+	fmt.Println("nums2: ", nums2)
+
+	fmt.Println(strings.Repeat("=", 50))
+
+	arr[2]++
+	fmt.Println("arr[2]++: ", arr)
+	fmt.Println()
+
+	// x := 6 - -1 - 4
+	// fmt.Println(x)
+	fmt.Println("Before: ", nums[1])
+	fmt.Println("nums[1]: ", nums[1])
+	fmt.Println("arr[4]: ", arr[4])
+	fmt.Println("arr[4] - 4: ", arr[4]-4)
+	fmt.Println("3 - 1 - 4: ", arr[4]-4)
+
+	// 3 - (1 - 4)
+	// nums[1] = nums[1] - (arr[4] - 4)
+	nums[1] -= arr[4] - 4
+	fmt.Println("After:  ", nums[1])
+
+	// fmt.Println("nums[1] :",nums[1])
+	// fmt.Println("arr[4]  :",arr[4])
+
+	// // fmt.Println("arr[4] - 4 :",arr[4] - 4)
+	// fmt.Println("nums[1] -= arr[4] - 4: ",nums)
+
+	nums2[1] += 5
+	// fmt.Println("nums2[1] += 5: ",nums2)
+	fmt.Println(strings.Repeat("=", 50))
+
+	fmt.Println(nums)
+}
+
+func prettyCap() {
+	s.PrintBacking = true
+
+	var nums []int
+	s.Show("no backing array", nums)
+
+	nums = append(nums, 1, 3)
+	s.Show("allocates", nums)
+
+	nums = append(nums, 2)
+	s.Show("free capacity", nums)
+
+	nums = append(nums, 4)
+	s.Show("no allocation", nums)
+
+	nums = append(nums, nums[2:]...)
+	s.Show("nums <- nums[2:]", nums)
+
+	nums = append(nums[:2], 7, 9)
+	s.Show("nums[:2] <- 7, 9", nums)
+
+
+	nums = nums[:6]
+	s.Show("nums[:6]", nums)
+	// backing := []int{1, 2, 3, 4, 5, 6}
+	// s.Show("backing", backing)
+
+	// b := backing
+
+	// b = b[:1]
+	// s.Show("b", b)
+
+	// b = b[:cap(b)]
+	// s.Show("b", b)
+
 }
