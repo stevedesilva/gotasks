@@ -36,7 +36,8 @@ func main() {
 	// sliceHousePrices()
 	// test()
 	// prettyCap()
-	increaseCapacity()
+	// increaseCapacity()
+	largeCapacity()
 }
 
 // ---------------------------------------------------------
@@ -983,6 +984,22 @@ func increaseCapacity() {
 		s.Show("nums", nums)
 		nums = append(nums, rand.Intn(9)+1)
 		time.Sleep(time.Second / 4)
+	}
+
+}
+
+func largeCapacity() {
+	ages, oldCap := []int{1}, 1.
+	var max int = 5e5 // 500000
+
+	for len(ages) < max {
+		ages = append(ages, 1)
+		c := float64(cap(ages))
+		if c != oldCap {
+			fmt.Printf("len:%-10d cap:%-10g growth:%.2f\n", len(ages), c, c/oldCap)
+		}
+		oldCap = c
+
 	}
 
 }
