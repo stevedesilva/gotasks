@@ -11,6 +11,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"math/rand"
 	"os"
 	"sort"
 	"strconv"
@@ -18,6 +19,7 @@ import (
 	"time"
 
 	s "github.com/inancgumus/prettyslice"
+	"github.com/inancgumus/screen"
 )
 
 func main() {
@@ -33,7 +35,8 @@ func main() {
 	// slicingByArguments()
 	// sliceHousePrices()
 	// test()
-	prettyCap()
+	// prettyCap()
+	increaseCapacity()
 }
 
 // ---------------------------------------------------------
@@ -951,7 +954,6 @@ func prettyCap() {
 	nums = append(nums[:2], 7, 9)
 	s.Show("nums[:2] <- 7, 9", nums)
 
-
 	nums = nums[:6]
 	s.Show("nums[:6]", nums)
 	// backing := []int{1, 2, 3, 4, 5, 6}
@@ -964,5 +966,23 @@ func prettyCap() {
 
 	// b = b[:cap(b)]
 	// s.Show("b", b)
+
+}
+
+func increaseCapacity() {
+	s.PrintBacking = true
+	s.MaxPerLine = 30
+	s.Width = 150
+
+	var nums []int
+
+	screen.Clear()
+
+	for cap(nums) <= 256 {
+		screen.MoveTopLeft()
+		s.Show("nums", nums)
+		nums = append(nums, rand.Intn(9)+1)
+		time.Sleep(time.Second / 4)
+	}
 
 }
