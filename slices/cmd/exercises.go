@@ -1005,8 +1005,6 @@ func largeCapacity() {
 
 }
 
-
-
 // ---------------------------------------------------------
 // EXERCISE: Fix the backing array problem
 //
@@ -1038,11 +1036,9 @@ func advBackingArrFix() {
 	// breaks the connection:
 	// mine and nums now have different backing arrays
 
-	var mine []int
-	mine = append(mine, nums[:3]...)
-	s.Show("mine 1", mine)
-	s.Show("nums 1", nums)
-
+	mine := append([]int(nil), nums[:3]...)
+	s.Show("mine 2", mine)
+	s.Show("nums 2", nums)
 	// DON'T TOUCH THE FOLLOWING CODE
 	//
 	// This code changes the elements of the nums
