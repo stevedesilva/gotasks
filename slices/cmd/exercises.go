@@ -1034,25 +1034,14 @@ func advBackingArrFix() {
 	// ----------------------------------------
 	// ONLY ADD YOUR CODE HERE
 	//
-	// Ensure that nums slice never changes even though
-	// the mine slice changes.
-	mine := nums
+	// ----------------------------------------
+	// breaks the connection:
+	// mine and nums now have different backing arrays
+
+	var mine []int
+	mine = append(mine, nums[:3]...)
 	s.Show("mine 1", mine)
 	s.Show("nums 1", nums)
-	// ----------------------------------------
-	mine = mine[:3:3]
-	s.Show("mine 2", mine)
-	s.Show("nums 2", nums)
-
-	// creates a new backing array since we are over the cap
-	mine = append(mine,mine...)
-	s.Show("mine 3", mine)
-	s.Show("nums 3", nums)
-
-    // slice the new array keeps old backing array in tact
-	mine = mine[3:6]
-    s.Show("mine 4", mine)
-	s.Show("nums 4", nums)
 
 	// DON'T TOUCH THE FOLLOWING CODE
 	//
