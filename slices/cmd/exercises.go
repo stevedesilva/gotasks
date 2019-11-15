@@ -37,7 +37,8 @@ func main() {
 	// test()
 	// prettyCap()
 	// increaseCapacity()
-	largeCapacity()
+	// largeCapacity()
+	advBackingArrFix()
 }
 
 // ---------------------------------------------------------
@@ -1002,4 +1003,64 @@ func largeCapacity() {
 
 	}
 
+}
+
+
+
+// ---------------------------------------------------------
+// EXERCISE: Fix the backing array problem
+//
+//  Ensure that changing the elements of the `mine` slice
+//  does not change the elements of the `nums` slice.
+//
+//
+// CURRENT OUTPUT (INCORRECT)
+//
+//  Mine         : [-50 -100 -150 25 30 50]
+//  Original nums: [-50 -100 -150]
+//
+//
+// EXPECTED OUTPUT
+//
+//  Mine         : [-50 -100 -150]
+//  Original nums: [56 89 15]
+//
+// ---------------------------------------------------------
+
+func advBackingArrFix() {
+	// DON'T TOUCH THE FOLLOWING CODE
+	nums := []int{56, 89, 15, 25, 30, 50}
+
+	// ----------------------------------------
+	// ONLY ADD YOUR CODE HERE
+	//
+	// Ensure that nums slice never changes even though
+	// the mine slice changes.
+	mine := nums
+	s.Show("mine 1", mine)
+	s.Show("nums 1", nums)
+	// ----------------------------------------
+	mine = mine[:3:3]
+	s.Show("mine 2", mine)
+	s.Show("nums 2", nums)
+
+	// creates a new backing array since we are over the cap
+	mine = append(mine,mine...)
+	s.Show("mine 3", mine)
+	s.Show("nums 3", nums)
+
+    // slice the new array keeps old backing array in tact
+	mine = mine[3:6]
+    s.Show("mine 4", mine)
+	s.Show("nums 4", nums)
+
+	// DON'T TOUCH THE FOLLOWING CODE
+	//
+	// This code changes the elements of the nums
+	// slice.
+	//
+	mine[0], mine[1], mine[2] = -50, -100, -150
+
+	fmt.Println("Mine         :", mine[:3])
+	fmt.Println("Original nums:", nums[:3])
 }
