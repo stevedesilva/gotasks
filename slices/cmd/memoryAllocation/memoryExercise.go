@@ -67,6 +67,10 @@ import (
 const size = 1e7
 
 func main() {
+	observeMemoryAllocations()
+}
+
+func observeMemoryAllocations() {
 	// don't worry about this code.
 	// it stops the garbage collector: prevents cleaning up the memory.
 	// see the link if you're curious:
