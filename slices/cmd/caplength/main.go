@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	s "github.com/inancgumus/prettyslice"
+)
 
 // ---------------------------------------------------------
 // EXERCISE: Observe the length and capacity
@@ -30,6 +34,17 @@ func main() {
 	// 8. declare the games slice again using a slice literal
 	//    (use the same elements from step 3)
 
+	// var games []string
+	// games := []string(nil)
+
+	games := []string{}
+
+	fmt.Printf("length %d capacity %d \n", len(games), cap(games))
+	s.Show("games", games)
+
+	games = append(games, "pacman", "mario", "tetris", "doom")
+	s.Show("games append", games)
+
 	// --- #2 ---
 	// 1. use a loop from 0 to 4 to slice the games slice, element by element.
 	//
@@ -39,6 +54,18 @@ func main() {
 	// for ... {
 	// 	fmt.Printf("games[:%d]'s len: %d cap: %d\n", ...)
 	// }
+
+	// for i := 0; i < len(games); i++ {
+	// 	c := cap(games)
+	// 	s := games[i:c]
+	// 	fmt.Printf("games[:%d]'s len: %d cap: %d\n", i,len(s),cap(s))
+
+	// }
+
+	for i := 0; i <= len(games); i++ {
+		s := games[:i]
+		fmt.Printf("games[:%d]'s len: %d cap: %d\n", i, len(s), cap(s))
+	}
 
 	// --- #3 ---
 	// 1. slice the games slice up to zero element
@@ -58,14 +85,14 @@ func main() {
 	// []string{"ultima", "dagger", "pong", "coldspot", "zetra"}
 	fmt.Println()
 
-	// zero := ...
-	// fmt.Printf("games's     len: %d cap: %d\n", ...)
-	// fmt.Printf("zero's      len: %d cap: %d\n", ...)
+	zero := games[:0]
+	fmt.Printf("games's     len: %d cap: %d\n", len(games), cap(games))
+	fmt.Printf("zero's      len: %d cap: %d\n", len(zero), cap(zero))
 
-	// for ... {
-	//   ...
-	//   fmt.Printf("zero's      len: %d cap: %d\n", ...)
-	// }
+	for _, v := range []string{"ultima", "dagger", "pong", "coldspot", "zetra"} {
+		zero = append(zero, v)
+		fmt.Printf("zero's      len: %d cap: %d\n", len(zero), cap(zero))
+	}
 
 	// --- #4 ---
 	// using a range loop, slice the zero slice element by element,
@@ -74,10 +101,10 @@ func main() {
 	// observe that, the range loop only loops for the length, not the cap.
 	fmt.Println()
 
-	// for ... {
-	//   s := zero[:n]
-	//   fmt.Printf("zero[:%d]'s  len: %d cap: %d\n", ...)
-	// }
+	for i := range games {
+		s := zero[:i]
+		fmt.Printf("zero[:%d]'s  len: %d cap: %d\n", i, len(s), cap(s))
+	}
 
 	// --- #5 ---
 	// 1. do the 3rd step above again but this time, start by slicing
@@ -90,6 +117,14 @@ func main() {
 	// for ... {
 	//   fmt.Printf("zero[:%d]'s  len: %d cap: %d - %q\n", ...)
 	// }
+
+	zero = zero[:cap(zero)]
+	s.Show("--- #5 --- Zero", zero)
+	for n := range zero {
+		tmp := zero[:n]
+		// s.Show("tmp", tmp)
+		fmt.Printf("zero[:%d]'s  len: %d cap: %d - %q\n", n, len(tmp), cap(tmp), tmp)
+	}
 
 	// --- #6 ---
 	// 1. change the one of the elements of the zero slice
@@ -104,6 +139,21 @@ func main() {
 	// fmt.Printf("zero  : %q\n", zero)
 	// fmt.Printf("games : %q\n", games)
 
+	zero[0] = "command & conquer"
+	games[0] = "red alert"
+	fmt.Printf("zero  : %q\n", zero)
+	fmt.Printf("games : %q\n", games)
+
+	s.Show("--- #6 --- Zero", zero)
+	s.Show("--- #6 --- games", games)
+
 	// --- #7 ---
 	// try to slice the games slice beyond its capacity
+
+	// --- #7 ---
+	// uncomment and see the error.
+	// _ = games[:cap(games)+1]
+	// or:
+	// _ = games[:5]
+
 }
