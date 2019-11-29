@@ -116,8 +116,12 @@ func main() {
 	//     Print the `clone` and `sliced` slices.
 	//
 	//
-	// ...
-	// s.Show("6th step", clone, sliced)
+	sliced := clone[1:4:4]
+	sliced = append(sliced, "hypatia")
+
+	clone[2] = "elder"
+
+	s.Show("6th step", clone, sliced)
 }
 
 //
