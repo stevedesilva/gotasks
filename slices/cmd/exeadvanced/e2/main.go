@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/stevedesilva/learngo/slices/api"
+	"github.com/stevedesilva/learngo/slices/cmd/exeadvanced/e2/api"
 )
 
 // ---------------------------------------------------------
