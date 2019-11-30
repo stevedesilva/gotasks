@@ -64,6 +64,91 @@ import (
 func main() {
 	// You need to add a newline after each sentence in another slice.
 	// Don't touch the following code.
+
+	correctSong()
+
+	// correctSongAlt()
+}
+
+func correctSongAlt() {
+	lyric := strings.Fields(`yesterday all my troubles seemed so far away now it looks as though they are here to stay oh i believe in yesterday`)
+
+	// `+3` because we're going to add 3 newline characters to the fix slice.
+	fix := make([]string, len(lyric)+3)
+
+	//
+	// USE A SLICE TO STORE WHERE EACH SENTENCE ENDS
+	//
+	// + The first sentence has 8 words so its cutting index is 8.
+	//
+	//   yesterday all my troubles seemed so far away now it looks as though they are here to stay
+	//                                               |
+	//                                               v
+	//                                cutting index: 8
+	//
+	//
+	// + The second sentence has 10 words so its cutting index is 10.
+	//
+	//   now it looks as though they are here to stay oh i believe in yesterday
+	//                                               |
+	//                                               v
+	//                                cutting index: 10
+	//
+	//
+	// + The last sentence has 5 words so its cutting index is 5.
+	//
+	//   oh i believe in yesterday
+	//                            |
+	//                            v
+	//             cutting index: 5
+	//
+	cutpoints := []int{8, 10, 5}
+
+	//
+	// `n` tracks how much we've moved inside the `lyric` slice.
+	//
+	// `i` tracks the sentence that we're on.
+	//
+	for i, n := 0, 0; n < len(lyric); i++ {
+		//
+		// copy to `fix` from the `lyric`
+		//
+		//   destination:
+		//     fix[n+i] because we don't want to delete the previous copy.
+		//     it moves sentence by sentence, using the cutpoints.
+		//
+		//   source:
+		//     lyric[n:n+cutpoints[i]] because we want copy the next sentence
+		//     beginning from the number of the last copied elements to the
+		//     n+next cutpoint (the next sentence).
+		//
+		n += copy(fix[n+i:], lyric[n:n+cutpoints[i]])
+
+		//
+		// add a newline after each sentence.
+		//
+		// notice that the '\n' position slides as we move over.
+		// that's why it's: `n+i`.
+		//
+		fix[n+i] = "\n"
+
+		// uncomment to see how the fix slice changes.
+		// s.Show("fix slice", fix)
+	}
+
+	s.Show("fix slice", fix)
+
+	// print the sentences
+	for _, w := range fix {
+		fmt.Print(w)
+		if w != "\n" {
+			fmt.Print(" ")
+		}
+	}
+
+}
+
+func correctSong() {
 	lyric := strings.Fields(`yesterday all my troubles seemed so far away now it looks as though they are here to stay oh i believe in yesterday`)
 
 	// ===================================
@@ -71,18 +156,17 @@ func main() {
 	// ~~~ CHANGE THIS CODE ~~~
 	//
 	const br = "\n"
-	ln := make([]string, len(lyric)+3)
+	fix := make([]string, len(lyric)+3)
 
-	copy(ln, lyric[:7])
-	ln[7] = br
+	copy(fix, lyric[:7])
+	fix[7] = br
 
-	copy(ln[8:19], lyric[7:18])
-	ln[19] = br
+	copy(fix[8:19], lyric[7:18])
+	fix[19] = br
 
-	copy(ln[20:25], lyric[18:23])
-	ln[len(ln)-1] = br
+	copy(fix[20:25], lyric[18:23])
+	fix[len(fix)-1] = br
 
-	fix := ln
 	//
 	// ===================================
 
