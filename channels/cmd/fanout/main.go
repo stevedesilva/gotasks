@@ -2,26 +2,27 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"sync"
+	"time"
 )
 
 func main() {
-	sendAndReceive()
+	fanOutExample()
 }
 
-func sendAndReceive() {
+func fanOutExample() {
 	// general channels
-	eve := make(chan int)
-	odd := make(chan int)
-	fanin := make(chan int)
+	c1 := make(chan int)
+	c2 := make(chan int)
 
-	// start goroutines
-	go send(eve, odd)
+	// start goroutine
+	go populate(c1)
 
-	go receive(eve, odd, fanin)
+	go fanOutIn(c1, c2)
 
-	// range over fanin channel until closed - blocks waiting for value
-	for v := range fanin {
+	// range over c2 channel until closed - blocks waiting for value
+	for v := range c2 {
 		fmt.Println(v)
 	}
 
@@ -29,42 +30,31 @@ func sendAndReceive() {
 }
 
 // specific send channels
-func send(eve, odd chan<- int) {
-	for i := 0; i < 10; i++ {
-		if i%2 == 0 {
-			eve <- i
-		} else {
-			odd <- i
-		}
+func populate(c chan int) {
+	for i := 0; i < 100; i++ {
+		c <- i
 	}
-	// close channel stop range
-	close(eve)
-	close(odd)
+	close(c)
 }
 
-func receive(even, odd <-chan int, fanin chan<- int) {
-
+func fanOutIn(c1, c2 chan int) {
 	var wg sync.WaitGroup
-	wg.Add(2)
-	// put multiple values from even and odd into one chan (fanin). Reduce to 1 channel
-	go func() {
-		// range until the channel is closed by send go routine
-		// block until value is pull off chan
-		for v := range even {
-			fanin <- v
-		}
-		// decrement waitgroup count
-		wg.Done()
-	}()
 
-	go func() {
-		for v := range odd {
-			fanin <- v
-		}
-		// decrement waitgroup count
-		wg.Done()
-	}()
-
+	// fanout - each c1 value gets handled by a seperate goroutine which then fanin (write back) to the same c2 channel
+	// range exits after c1 closes in populate
+	for v := range c1 {
+		wg.Add(1)
+		go func(v2 int) {
+			c2 <- timeConsumingWork(v2)
+			wg.Done()
+		}(v)
+	}
+	// wait for all goroutines to complete
 	wg.Wait()
-	close(fanin)
+	close(c2)
+}
+
+func timeConsumingWork(n int) int {
+	time.Sleep(time.Microsecond * time.Duration(rand.Intn(500)))
+	return n + rand.Intn(1000)
 }
